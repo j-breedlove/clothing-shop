@@ -9,7 +9,7 @@ Types of buttons:
  */
 
 const BUTTON_TYPE_CLASSES = {
-  google: "google-sign-in",
+  google: "google-authentication",
   inverted: "inverted",
 };
 const Button = ({ children, buttonType, ...otherProps }) => {
