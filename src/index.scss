@@ -1,13 +1,14 @@
 body {
   margin: 0;
-  font-family: "Open Sans Condensed", sans-serif;
+    padding: 20px 40px;
+  font-family: 'Ubuntu Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: "Noto Sans Adlam", monospace;
-}
+//code {
+//  font-family: "Noto Sans Adlam", monospace;
+//}
 
 a {
   text-decoration: none;
