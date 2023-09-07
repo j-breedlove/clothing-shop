@@ -4,54 +4,56 @@ import {
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component";
-import Button from "../button/button.component";
-import "./sign-up-form.styles.scss";
+import { StyledButton } from "../button/button.styles";
+import { SignUpContainer } from "./sign-up-form.styles";
 import { UserContext } from "../../contexts/user.context";
 
 const SignUpForm = () => {
-  const { setCurrentUser } = useContext(UserContext);
-  const defaultFormFields = {
+  const [userCredentials, setUserCredentials] = useState({
     displayName: "",
     email: "",
     password: "",
     confirmPassword: "",
-  };
-  const [formFields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPassword } = formFields;
+  });
 
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
+  const { setAuthUser } = useContext(UserContext);
+  const { displayName, email, password, confirmPassword } = userCredentials;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+      alert("Passwords don't match");
       return;
     }
+
     try {
       const { user } = await createAuthUserWithEmailAndPassword(
         email,
         password,
       );
-      setCurrentUser(user);
       await createUserDocumentFromAuth(user, { displayName });
-      resetFormFields();
+
+      setUserCredentials({
+        displayName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      setAuthUser(user);
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("Email already in use");
-      } else {
-        console.error("User creation encountered an error", error);
-      }
+      console.error("Error signing up:", error.message);
     }
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormFields({ ...formFields, [name]: value });
+    setUserCredentials((prevState) => ({ ...prevState, [name]: value }));
   };
+
   return (
-    <div className={"sign-up-container"}>
+    <SignUpContainer>
       <h2>Don't have an account?</h2>
       <span>Sign up with email and password</span>
       <form onSubmit={handleSubmit}>
@@ -71,7 +73,6 @@ const SignUpForm = () => {
           name={"email"}
           value={email}
         />
-
         <FormInput
           label={"Password"}
           type={"password"}
@@ -88,9 +89,9 @@ const SignUpForm = () => {
           name={"confirmPassword"}
           value={confirmPassword}
         />
-        <Button type="submit">Sign Up</Button>
+        <StyledButton type="submit">Sign Up</StyledButton>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
 

@@ -1,26 +1,8 @@
 import React from "react";
-import "./button.styles.scss";
+import { StyledButton } from "./button.styles";
 
-/*
-Types of buttons:
-- Google Sign In
-- inverted
-- default
- */
-
-const BUTTON_TYPE_CLASSES = {
-  google: "google-sign-in",
-  inverted: "inverted",
-};
-const Button = ({ children, buttonType, ...otherProps }) => {
-  return (
-    <button
-      className={`button-container ${BUTTON_TYPE_CLASSES[buttonType]}`}
-      {...otherProps}
-    >
-      {children}
-    </button>
-  );
+const Button = ({ children, ...props }) => {
+  return <StyledButton {...props}>{children}</StyledButton>;
 };
 
 export default Button;
