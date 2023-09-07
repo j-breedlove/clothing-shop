@@ -8,7 +8,12 @@ import CartIcon from "../../components/cart-icon/cart-icon.component";
 
 // 3. Assets & Styles
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
-import "./navigation.styles.scss";
+import {
+  NavigationContainer,
+  LogoContainer,
+  NavLink,
+  NavLinks,
+} from "./navigation.styles";
 
 // 4. Contexts & Hooks
 import { CartContext } from "../../contexts/cart.context";
@@ -24,27 +29,25 @@ const Navigation = () => {
   // console.log(currentUser);
   return (
     <Fragment>
-      <div className={"navigation"}>
-        <Link className={"logo-container"} to={"/"}>
+      <NavigationContainer>
+        <LogoContainer to={"/"}>
           <CrownLogo className={"logo"} />
-        </Link>
-        <div className="nav-links-container">
-          <Link className={"nav-link"} to={"/shop"}>
-            Shop
-          </Link>
+        </LogoContainer>
+        <NavLinks>
+          <NavLink to={"/shop"}>Shop</NavLink>
           {currentUser ? (
-            <span className={"nav-link"} onClick={signOutUser}>
+            <NavLink as={"span"} onClick={signOutUser} to={""}>
               Sign Out
-            </span>
+            </NavLink>
           ) : (
-            <Link className={"nav-link"} to={"/auth"}>
+            <NavLink to={"/auth"}>
               <span className={"nav-link"}>Sign In</span>
-            </Link>
+            </NavLink>
           )}
           <CartIcon />
-        </div>
+        </NavLinks>
         {isCartOpen && <CartDropdown />}
-      </div>
+      </NavigationContainer>
       <Outlet />
     </Fragment>
   );
