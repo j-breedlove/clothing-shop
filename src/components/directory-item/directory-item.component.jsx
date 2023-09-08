@@ -10,7 +10,7 @@ import {
 const DirectoryItem = ({ category }) => {
   return (
     <DirectoryItemContainer>
-      <BackgroundImageDiv imageUrl={category.imageUrl} />
+      <BackgroundImageDiv $imageUrl={category.imageUrl} />
       <BodyDiv>
         <TitleH2>{category.title}</TitleH2>
         <SubtitleP>Shop Now</SubtitleP>
