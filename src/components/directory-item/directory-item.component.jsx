@@ -1,20 +1,18 @@
-import React from "react";
 import {
+  BackgroundImage,
+  Body,
   DirectoryItemContainer,
-  BackgroundImageDiv,
-  BodyDiv,
-  TitleH2,
-  SubtitleP,
-} from "./directory-item.styles";
+} from './directory-item.styles';
 
 const DirectoryItem = ({ category }) => {
+  const { imageUrl, title } = category;
   return (
     <DirectoryItemContainer>
-      <BackgroundImageDiv $imageUrl={category.imageUrl} />
-      <BodyDiv>
-        <TitleH2>{category.title}</TitleH2>
-        <SubtitleP>Shop Now</SubtitleP>
-      </BodyDiv>
+      <BackgroundImage imageUrl={imageUrl} />
+      <Body>
+        <h2>{title}</h2>
+        <p>Shop Now</p>
+      </Body>
     </DirectoryItemContainer>
   );
 };
