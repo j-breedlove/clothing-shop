@@ -1,18 +1,15 @@
-import React from "react";
-import {
-  GroupContainer,
-  FormInputContainer,
-  FormInputLabel,
-} from "./form-input.styles";
+import { FormInputLabel, Input, Group } from './form-input.styles';
 
 const FormInput = ({ label, ...otherProps }) => {
   return (
-    <GroupContainer>
-      <FormInputContainer {...otherProps} />
+    <Group>
+      <Input {...otherProps} />
       {label && (
-        <FormInputLabel value={otherProps.value}>{label}</FormInputLabel>
+        <FormInputLabel shrink={otherProps.value.length}>
+          {label}
+        </FormInputLabel>
       )}
-    </GroupContainer>
+    </Group>
   );
 };
 

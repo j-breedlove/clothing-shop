@@ -1,8 +1,8 @@
-import React from "react";
-import CategoryMenu from "../../components/category-menu/category-menu.component";
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 
-function Home(props) {
+import Directory from '../../components/directory/directory.component';
+
+const Home = () => {
   const categories = [
     {
       id: 1,
@@ -30,12 +30,13 @@ function Home(props) {
       imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
     },
   ];
+
   return (
     <div>
+      <Directory categories={categories} />
       <Outlet />
-      <CategoryMenu categories={categories} />
     </div>
   );
-}
+};
 
 export default Home;

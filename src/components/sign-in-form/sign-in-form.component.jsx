@@ -1,39 +1,47 @@
-import React, { useState } from "react";
+import { useState } from 'react';
+
+import FormInput from '../form-input/form-input.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
+
 import {
-  createUserDocumentFromAuth,
-  signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.utils";
-import FormInput from "../form-input/form-input.component";
-import { StyledButton } from "../button/button.styles";
-import { SignInContainer, ButtonsContainer } from "./sign-in-form.styles";
+  signInWithGooglePopup,
+} from '../../utils/firebase/firebase.utils';
+
+import { SignInContainer, ButtonsContainer } from './sign-in-form.styles';
+
+const defaultFormFields = {
+  email: '',
+  password: '',
+};
 
 const SignInForm = () => {
-  const [userCredentials, setUserCredentials] = useState({
-    email: "",
-    password: "",
-  });
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { email, password } = formFields;
 
-  const { email, password } = userCredentials;
+  const resetFormFields = () => {
+    setFormFields(defaultFormFields);
+  };
+
+  const signInWithGoogle = async () => {
+    await signInWithGooglePopup();
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
       await signInAuthUserWithEmailAndPassword(email, password);
-      setUserCredentials({ email: "", password: "" });
+      resetFormFields();
     } catch (error) {
-      console.error("Error signing in:", error.message);
+      console.log('user sign in failed', error);
     }
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setUserCredentials((prevState) => ({ ...prevState, [name]: value }));
-  };
 
-  const signInWithGoogle = () => {
-    signInWithGooglePopup();
+    setFormFields({ ...formFields, [name]: value });
   };
 
   return (
@@ -42,30 +50,31 @@ const SignInForm = () => {
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
-          label={"Email"}
-          type={"email"}
+          label='Email'
+          type='email'
           required
           onChange={handleChange}
-          name={"email"}
+          name='email'
           value={email}
         />
+
         <FormInput
-          label={"Password"}
-          type={"password"}
+          label='Password'
+          type='password'
           required
           onChange={handleChange}
-          name={"password"}
+          name='password'
           value={password}
         />
         <ButtonsContainer>
-          <StyledButton type={"submit"}>Sign In</StyledButton>
-          <StyledButton
-            type={"button"}
-            buttonType={"google"}
+          <Button type='submit'>Sign In</Button>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.google}
+            type='button'
             onClick={signInWithGoogle}
           >
-            Google Sign In
-          </StyledButton>
+            Sign In With Google
+          </Button>
         </ButtonsContainer>
       </form>
     </SignInContainer>
